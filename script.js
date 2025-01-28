@@ -1,23 +1,49 @@
 function convertToRoman(num) {
-  	const obj = {
-      0:['M',1000], 
-      1:['D', 500], 
-      2:['C', 100], 
-      3:['L', 50], 
-      4:['X', 10], 
-      5:['V', 5], 
-      6:['I', 1]
+    const obj = {
+        0: ['M', 1000],
+        1: ['D', 500],
+        2: ['C', 100],
+        3: ['L', 50],
+        4: ['X', 10],
+        5: ['V', 5],
+        6: ['I', 1]
     };
 
-  //your code here
+    // Special cases for subtractive notation
+    const specialCases = {
+        900: 'CM',
+        400: 'CD',
+        90: 'XC',
+        40: 'XL',
+        9: 'IX',
+        4: 'IV'
+    };
 
+    let romanNumeral = "";
+
+    // Handle subtractive cases first
+    for (let value in specialCases) {
+        value = parseInt(value);
+        while (num >= value) {
+            romanNumeral += specialCases[value];
+            num -= value;
+        }
+    }
+
+    // Handle the remaining cases
+    for (let key in obj) {
+        let [symbol, value] = obj[key];
+        while (num >= value) {
+            romanNumeral += symbol;
+            num -= value;
+        }
+    }
+
+    return romanNumeral;
 }
-// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
 
-// console.log(convertToRoman(36));
-
-
-
+// Example usage:
+console.log(convertToRoman(36)); // Output: XXXVI
 
 // do not edit below this line
-module.exports = convertToRoman
+module.exports = convertToRoman;
